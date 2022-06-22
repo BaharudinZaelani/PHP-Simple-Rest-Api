@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <table border="1" cellpadding="10" cellspacing="0">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Buku</th>
+                <th>Deskripsi</th>
+                <th>Pengarang</th>
+                <th>Tahun</th>
+            </tr>
+        </thead>
+        <!-- loop here -->
+        <tbody id="data"></tbody>
+        <!-- loop here -->
+    </table>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // api mahasiswa with get request
+        axios.get('../api/mahasiswa.php').then( res => {
+            // get books
+            let data = res.data;
+
+            // setup
+            let tableId = "";
+            let tableNama = "";
+            let tablePengarang = "";
+            let tableTahun = "";
+            const tbody = document.getElementById("data");
+            
+            // loop for book
+            for( let i = 0; i < data.length; i++ ){
+                // create tr tag
+                const trTag = document.createElement("tr");
+
+                // create td tag
+                const tdTagID = document.createElement("td");
+                const tdTagNama = document.createElement("td");
+                const tdTagDesc = document.createElement("td");
+                const tdTagPengarang = document.createElement("td");
+                const tdTagTahun = document.createElement("td");
+
+                // create node
+                tableId = document.createTextNode(data[i].id);
+                tdTagID.appendChild(tableId);
+                trTag.appendChild(tdTagID);
+                
+                tableNama =  document.createTextNode(data[i].nama);
+                tdTagNama.appendChild(tableNama);
+                trTag.appendChild(tdTagNama);
+
+                tableDesc =  document.createTextNode(data[i].deskripsi);
+                tdTagDesc.appendChild(tableDesc);
+                trTag.appendChild(tdTagDesc);
+                
+                tablePengarang =  document.createTextNode(data[i].pengarang);
+                tdTagPengarang.appendChild(tablePengarang);
+                trTag.appendChild(tdTagPengarang);
+                
+                tableTahun =  document.createTextNode(data[i].tahun_terbit);
+                tdTagTahun.appendChild(tableTahun);
+                trTag.appendChild(tdTagTahun);
+
+                // append to tbody
+                tbody.appendChild(trTag);
+            }
+            
+            
+        });
+    </script>
+</body>
+</html>
